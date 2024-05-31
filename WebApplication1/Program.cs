@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
+using Ecommerce.Data;
+
 internal class Program
 {
     private static void Main(string[] args)
@@ -10,11 +12,12 @@ internal class Program
         // Add services to the container.
         builder.Services.AddRazorPages();
 
-        var app = builder.Build();
+        builder.Services.AddDbContext<DataContext>(options =>
+        {
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+        });
 
-        var connectionString = builder.Configuration.GetConnectionString("MongoDBConnectionString");
-        var client = new MongoClient(connectionString);
-        var database = client.GetDatabase("myDatabase");
+        var app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())

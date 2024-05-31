@@ -1,20 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 
 namespace Ecommerce.Models
 {
     public class Customer
     {
+        [Key]
         public int CustomerID { get; set; }
 
-        [Required(ErrorMessage = "FirstName is required")]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
-
-        [Required(ErrorMessage = "LastName is required")]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+        [Required(ErrorMessage = "Username is required")]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
 
         [Display(Name = "Phone")]
         [Required(ErrorMessage = "Phone is required")]
@@ -30,5 +26,9 @@ namespace Ecommerce.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
+
+        public ICollection<Orders> Orders { get; set; }
+        public ICollection <Address> Address { get; set; }
+        public ICollection <Paymentdetails> Paymentdetails { get; set; }
     }
 }
